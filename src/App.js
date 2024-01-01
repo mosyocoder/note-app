@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+
+import React, { useState } from "react";
+import Markdown from "react-markdown";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [note, setNote] = useState("");
+	const [editMode, setEditMode] = useState(false);
+
+	const handleNoteClick = () => {
+		setEditMode(true);
+	};
+
+	const handleOutsideClick = (e) => {
+		if (editMode && e.target.tagName !== "TEXTAREA") {
+			setEditMode(false);
+		}
+	};
+
+	return (
+		<div className="App" onClick={handleOutsideClick}>
+			<div className={`note ${editMode ? "edit-mode" : ""}`} onClick={handleNoteClick}>
+				{editMode ? <textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="Notunuzu buraya yazın..." /> : <Markdown>{note}</Markdown>}
+			</div>
+		</div>
+	);
 }
 
 export default App;
