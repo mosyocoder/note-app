@@ -1,0 +1,8 @@
+.container{
+    width: 90%;
+    margin: 0 auto 100px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: baseline;
+}

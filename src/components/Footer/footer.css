@@ -1,0 +1,29 @@
+.footer{
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    background-color: #D2D8B3;
+    color: #272727;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    a{
+        margin: 0 25px;
+        color: #272727;
+        transition: all 1s;
+    }
+
+    a:hover{
+        color: #7E6952;
+    }
+    
+    @media(max-width:800px){
+        justify-content: space-evenly;
+
+        a{
+            margin: 0;
+        }
+    }
+}
