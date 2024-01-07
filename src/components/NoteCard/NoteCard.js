@@ -7,21 +7,26 @@ function NoteCard({ data }) {
 	const [note, setNote] = useState("");
 	const [editMode, setEditMode] = useState(false);
 
-	const handleNoteClick = () => {
-		setEditMode(true);
-	};
+    const date = new Date(data.createdAt);
 
-	const handleOutsideClick = (e) => {
+    const handleNoteClick = () => {
+		setEditMode(true);
+    };
+
+    const handleOutsideClick = (e) => {
 		if (editMode && e.target.tagName !== "TEXTAREA") {
 			setEditMode(false);
 		}
-	};
+    };
 
-	return (
+    return (
 		<div className="note-card">
 			<div className="note-card-title">
-				{data.createdAt}
-				<i className="fa-regular fa-trash-can"></i>
+				{date.toDateString() + "  " + date.toLocaleTimeString()}
+				<div className="note-card-buttons">
+					<i onClick={() => console.log("click")} className="fa-regular fa-pen-to-square"></i>
+					<i className="fa-regular fa-trash-can"></i>
+				</div>
 			</div>
 			{data.edit ? <Markdown>{data.text}</Markdown> : <textarea defaultValue={data.text} className="text" />}
 		</div>
@@ -31,7 +36,7 @@ function NoteCard({ data }) {
 		// 		{editMode ? <textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="Notunuzu buraya yazın..." /> : <Markdown>{note}</Markdown>}
 		// 	</div>
 		// </div>
-	);
+    );
 }
 
 export default NoteCard;
