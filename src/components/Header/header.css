@@ -1,13 +1,30 @@
 .header{
+    height: 100px;
+    background-color: #D2D8B3;
+    color: #272727;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    background-color: #D2D8B3;
-    height: 100px;
-    color: #272727;
+    justify-content: space-evenly;
+}
+
+.logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .title{
     margin-left: 50px;
+}
+
+.plus{
+    float: right;
+    color: white;
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.plus:hover{
+    color: black;
 }

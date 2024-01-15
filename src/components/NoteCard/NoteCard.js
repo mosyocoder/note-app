@@ -1,42 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useRef } from "react";
 import Markdown from "react-markdown";
 
 import "./notecard.css";
+import { NoteContext } from "../../context/NoteContext";
 
 function NoteCard({ data }) {
-	const [note, setNote] = useState("");
-	const [editMode, setEditMode] = useState(false);
+	const date = new Date(data.createdAt);
 
-    const date = new Date(data.createdAt);
+	const { notes, setNotes } = useContext(NoteContext);
 
-    const handleNoteClick = () => {
-		setEditMode(true);
-    };
+	const changeEdit = () => {
+		const noteIndex = notes.findIndex((note) => note.id === data.id);
 
-    const handleOutsideClick = (e) => {
-		if (editMode && e.target.tagName !== "TEXTAREA") {
-			setEditMode(false);
-		}
-    };
+		const updatedNote = { ...notes[noteIndex] };
 
-    return (
+		updatedNote.edit = !updatedNote.edit;
+
+		const updatedNotes = [...notes];
+		updatedNotes[noteIndex] = updatedNote;
+
+		setNotes(updatedNotes);
+		localStorage.setItem("notes", JSON.stringify(updatedNotes));
+	};
+
+	return (
 		<div className="note-card">
 			<div className="note-card-title">
 				{date.toDateString() + "  " + date.toLocaleTimeString()}
 				<div className="note-card-buttons">
-					<i onClick={() => console.log("click")} className="fa-regular fa-pen-to-square"></i>
+					<i onClick={() => changeEdit()} className={!data.edit ? "fa-regular fa-floppy-disk" : "fa-regular fa-pen-to-square"}></i>
 					<i className="fa-regular fa-trash-can"></i>
 				</div>
 			</div>
-			{data.edit ? <Markdown>{data.text}</Markdown> : <textarea defaultValue={data.text} className="text" />}
+			{data.edit ? <Markdown>{data.text}</Markdown> : <textarea defaultValue={data.text} autoFocus className="text" />}
 		</div>
-
-		// <div onClick={handleOutsideClick}>
-		// 	<div className={`note ${editMode ? "edit-mode" : ""}`} onClick={handleNoteClick}>
-		// 		{editMode ? <textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="Notunuzu buraya yazın..." /> : <Markdown>{note}</Markdown>}
-		// 	</div>
-		// </div>
-    );
+	);
 }
 
 export default NoteCard;
