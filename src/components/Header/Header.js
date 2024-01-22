@@ -13,8 +13,8 @@ function Header() {
 		const note = {
 			id,
 			createdAt: Date.now(),
-			text: `## deneme`,
-			edit: true,
+			text: ``,
+			edit: false,
 		};
 
 		if (!notes) {
